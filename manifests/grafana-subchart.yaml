@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: prompt-gull
+spec:
+  project: default
+  source:
+    path: charts/grafana
+    repoURL: https://github.com/wahuff/techxchange-gitops-lab.git
+    targetRevision: HEAD
+  destination:
+    namespace: prompt-gull
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
